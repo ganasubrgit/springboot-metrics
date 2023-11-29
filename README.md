@@ -18,11 +18,16 @@ Buildkit is now the default build engine in Docker. Here I use it to run build o
 docker buildx create --name my-builder --driver kubernetes --driver-opt replicas=1 --use
 ```
 
+
+
 (or)
 
 #### Build and push the image (Buildkit "buildx" plugin is now part of Docker) 
 ```
 docker buildx build --tag  myregistry/myorg/demo:latest --push .
+
+#if you want to build for multiple architecture 
+docker buildx build --tag myregistry/myorg/demo:latest --push --platform linux/amd64,linux/arm64 . 
 ```
 
 # Run the image 
