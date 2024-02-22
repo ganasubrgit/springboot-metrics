@@ -45,3 +45,7 @@ kubectl -n demo create deployment demo --image=myregistry/myorg/demo:latest --po
 kubectl -n demo expose deployment demo --type=LoadBalancer
 ```
 
+# To check the app endpoints
+```
+curl http://localhost:8080/greeting
+```
