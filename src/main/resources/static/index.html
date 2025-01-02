@@ -1,10 +1,136 @@
 <html>
 <head>
-    <title>Spring Boot Micrometer Demo</title>
+    <title>Spring Boot Observability Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        img {
+            margin: 40px auto;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #337ab7;
+        }
+        
+        a:hover {
+            color: #23527c;
+        }
+        
+        table {
+            margin: 40px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f0f0f0;
+        }
+        
+        #response-label {
+            font-weight: bold;
+            color: #337ab7;
+        }
+    </style>
 </head>
 <body>
-<p><a href="/greeting">Get a greeting</a></p>
-<p><a href="/actuator/prometheus">View Prometheus metrics endpoint</a></p>
-<img src="logo.jpg" alt="logo" width="400" height="300">
+    <img src="logo.jpg" alt="logo" width="200" height="100">
+    <table>
+        <tr><th colspan="2">POST request (Gift)</th></tr>
+        <tr>
+            <td><label for="recipientName">Recipient Name:</label></td>
+            <td><input type="text" id="recipientName" name="recipientName"></td>
+        </tr>
+        <tr>
+            <td><label for="giftName">Gift Name:</label></td>
+            <td><input type="text" id="giftName" name="giftName"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="Send Gift" onclick="sendGift()" style="margin: 0 auto; display: block;">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p id="response-label"></p>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr><th>GET request (Fibonacci)</th></tr>
+        <tr>
+            <td>
+            <a href="#" onclick="getFib()">Get next Fibonacci number</a>
+            </td></tr>
+            <tr>
+            <td><label id="fib-response"></label></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr><th>GET request (Greeting)</th></tr>
+        <tr>
+            <td>
+            <a href="#" onclick="getGreeting()">Get a greeting</a>
+            </td></tr>
+            <tr>
+            <td><label id="greeting-response"></label></td>
+        </tr>
+    </table>
+
+    <p><a href="/actuator/prometheus" target="_blank">View app metrics</a></p>
+
+    <script>
+        function sendGift() {
+            const recipientName = document.getElementById('recipientName').value;
+            const giftName = document.getElementById('giftName').value;
+
+            const giftData = {
+                recipientName: recipientName,
+                giftName: giftName
+            };
+
+            fetch('/gift', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(giftData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response-label').innerHTML = `Gift sent successfully! Gift count: ${data.giftCount}`;
+            })
+            .catch(error => console.error(error));
+        }
+
+        function getGreeting() {
+            fetch('/greeting')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('greeting-response').innerHTML = data.content;
+            })
+            .catch(error => console.error(error));
+        }
+
+        function getFib() {
+            fetch('/fib')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('fib-response').innerHTML = `Fibonacci count: ${data.fibCount}, Next Fibonacci number: ${data.fibValue}`;
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
 </body>
 </html>
