@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Spring Boot Observability Demo</title>
+    <title>Observability Demo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,11 +48,11 @@
         <tr><th colspan="2">POST request (Gift)</th></tr>
         <tr>
             <td><label for="recipientName">Recipient Name:</label></td>
-            <td><input type="text" id="recipientName" name="recipientName"></td>
+            <td><input type="text" id="recipientName" name="recipientName" required></td>
         </tr>
         <tr>
             <td><label for="giftName">Gift Name:</label></td>
-            <td><input type="text" id="giftName" name="giftName"></td>
+            <td><input type="text" id="giftName" name="giftName" required></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -70,7 +70,7 @@
         <tr><th>GET request (Fibonacci)</th></tr>
         <tr>
             <td>
-            <a href="#" onclick="getFib()">Get next Fibonacci number</a>
+            <button onclick="getFib()">Get next Fibonacci number</button>
             </td></tr>
             <tr>
             <td><label id="fib-response"></label></td>
