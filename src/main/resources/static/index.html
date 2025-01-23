@@ -92,8 +92,13 @@
 
     <script>
         function sendGift() {
-            const recipientName = document.getElementById('recipientName').value;
-            const giftName = document.getElementById('giftName').value;
+            const recipientName = document.getElementById('recipientName').value.trim();
+            const giftName = document.getElementById('giftName').value.trim();
+
+            if (!recipientName || !giftName) {
+                alert('Both Recipient Name and Gift Name are required!');
+                return;
+            }
 
             const giftData = {
                 recipientName: recipientName,
